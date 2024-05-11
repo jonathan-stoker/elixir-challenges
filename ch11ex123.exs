@@ -81,17 +81,23 @@ defmodule BinariesChapter do
 
   # Write a function that takes a list of double-quoted strings and prints each on a separate line, centered in a column that has the
   # width of the longest string. Make sure it works with UTF characters.
-  # ^I think I will have to add whitespace to achieve this
 
   def center(list) do
     sorted_list =
       Enum.sort(list, &(String.length(&1) >= String.length(&2)))
       IO.inspect(sorted_list)
-
+    max_length = String.length(Enum.at(sorted_list, 0))
+    print_centered(max_length, list)
   end
 
-    # get the length of longest string, and then the whitespace to be added for each subsequent string is
-    # that max length / 2 on each side
+  def print_centered(_max_length, []), do: IO.puts("")
 
-# module end
+  def print_centered(max_length, [head | tail]) do
+    padding_spaces = round(max_length / 2)
+    require IEx; IEx.pry()
+    IO.puts("#{String.pad_leading(head, padding_spaces)}")
+    print_centered(max_length, tail)
+  end
+
+
 end
