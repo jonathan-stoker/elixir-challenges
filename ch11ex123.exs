@@ -83,19 +83,19 @@ defmodule BinariesChapter do
   # width of the longest string. Make sure it works with UTF characters.
 
   def center(list) do
-    sorted_list =
-      Enum.sort(list, &(String.length(&1) >= String.length(&2)))
-      IO.inspect(sorted_list)
-    max_length = String.length(Enum.at(sorted_list, 0))
+    max_length = String.length(Enum.max(list))
     print_centered(max_length, list)
   end
+
+  # Need to change 86 back to what i had before
 
   def print_centered(_max_length, []), do: IO.puts("")
 
   def print_centered(max_length, [head | tail]) do
-    padding_spaces = round(max_length / 2)
-    require IEx; IEx.pry()
-    IO.puts("#{String.pad_leading(head, padding_spaces)}")
+    # string_with_padding = round(max_length / 2)
+    difference = max_length - String.length(head)
+    string_with_padding = round(difference / 2) + String.length(head)
+    IO.puts("#{String.pad_leading(head, string_with_padding)}")
     print_centered(max_length, tail)
   end
 
