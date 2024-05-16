@@ -104,14 +104,17 @@ defmodule BinariesChapter do
   # the case of the characters in the string is random.
 
   def format_and_capitalize(sentence_string) when is_binary(sentence_string) do
-    _format_and_capitalize(sentence_string)
+    formatting_list = []
+    _format_and_capitalize(sentence_string, formatting_list)
   end
 
-  defp _format_and_capitalize(<< head :: utf8, tail :: binary >>) do
-    IO.puts head
-    _format_and_capitalize(tail)
+  defp _format_and_capitalize(<< head :: utf8, tail :: binary >>, formatting_list) do
+    [head | formatting_list]
+    # require IEx; IEx.pry()
+    IO.puts(IO.inspect(formatting_list))
+    _format_and_capitalize(tail, formatting_list)
   end
 
-  defp _format_and_capitalize(<<>>), do: :ok
+  defp _format_and_capitalize(<<>>, _formatting_list), do: :ok
 
 end
