@@ -84,7 +84,8 @@ defmodule BinariesChapter do
 
   def center(list) do
     max_length =
-      String.length(Enum.at(Enum.sort(list, &(String.length(&1) >= String.length(&2))), 0))
+      String.length(Enum.at(
+        Enum.sort(list, &(String.length(&1) >= String.length(&2))), 0))
     print_centered(max_length, list)
   end
 
@@ -100,7 +101,7 @@ defmodule BinariesChapter do
   end
 
 
-  # Write a function to capitalize the sentences in a string. Each sentence is terminated by a period and a space. Right now,
+  # Exercise 6: Write a function to capitalize the sentences in a string. Each sentence is terminated by a period and a space. Right now,
   # the case of the characters in the string is random.
 
   def format_and_capitalize(sentence_string) when is_binary(sentence_string) do
@@ -109,12 +110,19 @@ defmodule BinariesChapter do
   end
 
   defp _format_and_capitalize(<< head :: utf8, tail :: binary >>, formatting_list) do
-    [head | formatting_list]
+    formatting_list =
+      [head | formatting_list]
     # require IEx; IEx.pry()
-    IO.puts(IO.inspect(formatting_list))
+    IO.puts(formatting_list)
     _format_and_capitalize(tail, formatting_list)
   end
 
-  defp _format_and_capitalize(<<>>, _formatting_list), do: :ok
+  defp _format_and_capitalize(<<>>, formatting_list) do
+    # processed_list =
+      # Enum.chunk_by(formatting_list, &(rem(&1, 2) == 1))
+      # where the element = period and the next element = space
+      # Enum.chunk_by(formatting_list, &(&1 == 46 and &2 = 32))
+      :ok
+  end
 
 end
