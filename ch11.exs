@@ -105,20 +105,14 @@ defmodule BinariesChapter do
   # the case of the characters in the string is random.
 
   def format_and_capitalize(sentence_string) when is_binary(sentence_string) do
-    formatting_list = String.split(sentence_string, "", trim: true)
-    split_list = Enum.split_while(formatting_list, fn x -> x = "." end)
-    require IEx; IEx.pry()
+    formatting_list =
+      String.split(sentence_string, ~r{\.\s})
+      |> Enum.drop(-1)
+      require IEx; IEx.pry()
+    # split_list =
+      # Enum.split_while(formatting_list, fn x -> x = "." end)
+      # require IEx; IEx.pry()
     for sentence <- formatting_list, do: "#{String.capitalize(sentence)}."
-    # _format_and_capitalize(formatting_list)
   end
 
-  # defp _format_and_capitalize(<< head :: utf8, tail :: binary >>) do
-
-  #   capitalized_sentence =
-  #     String.capitalize(head)
-  #   IO.puts(capitalized_sentence)
-  #   _format_and_capitalize(tail)
-  # end
-
-  # defp _format_and_capitalize(<<>>), do: :ok
 end
