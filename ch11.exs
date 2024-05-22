@@ -108,11 +108,17 @@ defmodule BinariesChapter do
     formatting_list =
       String.split(sentence_string, ~r{\.\s})
       |> Enum.drop(-1)
-      require IEx; IEx.pry()
-    # split_list =
-      # Enum.split_while(formatting_list, fn x -> x = "." end)
-      # require IEx; IEx.pry()
-    for sentence <- formatting_list, do: "#{String.capitalize(sentence)}."
+    case formatting_list do
+      formatting_list when String.length > 1 ->
+        IO.puts("List has more than one item")
+        IO.write("#{String.capitalize(Enum.at(formatting_list, 0))}.")
+        for sentence <- formatting_list, Enum.find_index(formatting_list, fn x -> x == sentence end), do: IO.write(sentence)
+        # not sure the above will work
+      _ ->
+        "#{String.capitalize(sentence)}."
+    end
+
+    # for sentence <- formatting_list, do: "#{String.capitalize(sentence)}."
   end
 
 end
