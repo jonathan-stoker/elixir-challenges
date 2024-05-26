@@ -102,23 +102,20 @@ defmodule BinariesChapter do
 
 
   # Exercise 6: Write a function to capitalize the sentences in a string. Each sentence is terminated by a period and a space. Right now,
-  # the case of the characters in the string is random.
+  # the case of the characters in the string is random.  Ex: BinariesChapter.format_and_capitalize("oh. a DOG. woof. ")
 
   def format_and_capitalize(sentence_string) when is_binary(sentence_string) do
     formatting_list =
       String.split(sentence_string, ~r{\.\s})
       |> Enum.drop(-1)
-    case formatting_list do
-      formatting_list when String.length > 1 ->
-        IO.puts("List has more than one item")
-        IO.write("#{String.capitalize(Enum.at(formatting_list, 0))}.")
-        for sentence <- formatting_list, Enum.find_index(formatting_list, fn x -> x == sentence end), do: IO.write(sentence)
-        # not sure the above will work
-      _ ->
-        "#{String.capitalize(sentence)}."
+    if Enum.count(formatting_list) > 1 do
+      IO.write("#{String.capitalize(Enum.at(formatting_list, 0))}.")
+      capitilized_remaining_sentences =
+         for sentence <- formatting_list, Enum.find_index(formatting_list, fn x -> x == sentence end) != 0, do: " #{String.capitalize(sentence)}."
+      IO.write(List.to_string(capitilized_remaining_sentences))
+    else
+      "#{String.capitalize(formatting_list)}."
     end
-
-    # for sentence <- formatting_list, do: "#{String.capitalize(sentence)}."
   end
 
 end
