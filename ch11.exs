@@ -107,14 +107,17 @@ defmodule BinariesChapter do
   def format_and_capitalize(sentence_string) when is_binary(sentence_string) do
     formatting_list =
       String.split(sentence_string, ~r{\.\s})
-      |> Enum.drop(-1)
     if Enum.count(formatting_list) > 1 do
-      IO.write("#{String.capitalize(Enum.at(formatting_list, 0))}.")
+      Enum.drop(formatting_list, -1)
+    end
+    if Enum.count(formatting_list) > 1 do
+      sentence_list = ["#{String.capitalize(Enum.at(formatting_list, 0))}."]
       capitilized_remaining_sentences =
-         for sentence <- formatting_list, Enum.find_index(formatting_list, fn x -> x == sentence end) != 0, do: " #{String.capitalize(sentence)}."
-      IO.write(List.to_string(capitilized_remaining_sentences))
+        for sentence <- formatting_list, Enum.find_index(formatting_list, fn x -> x == sentence end) != 0, do: " #{String.capitalize(sentence)}."
+      sentence_list = [capitilized_remaining_sentences | sentence_list]
+      List.to_string(Enum.reverse(sentence_list))
     else
-      "#{String.capitalize(formatting_list)}."
+      "#{String.capitalize(Enum.at(formatting_list, 0))}"
     end
   end
 
