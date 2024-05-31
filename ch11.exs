@@ -121,4 +121,13 @@ defmodule BinariesChapter do
     end
   end
 
+  # Write a function that reads and parses this file and then passes the result to the sales_tax function. Remember that the data should be formatted
+  # into a keyword list, and that the fields need to be the correct types (so the id field is an integer, and so on).
+  # BinariesChapter.sales_parser("./sales_information.csv")
+
+  def sales_parser(path_to_file) when is_binary(path_to_file) do
+    {:ok, file} = File.open(path_to_file, [:read, :utf8])
+  end
+
+
 end
