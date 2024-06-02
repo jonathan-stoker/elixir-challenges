@@ -127,6 +127,8 @@ defmodule BinariesChapter do
 
   def sales_parser(path_to_file) when is_binary(path_to_file) do
     {:ok, file} = File.open(path_to_file, [:read, :utf8])
+    data = IO.read(file, :line)
+    require IEx; IEx.pry()
   end
 
 
