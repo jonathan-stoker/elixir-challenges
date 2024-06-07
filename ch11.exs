@@ -129,8 +129,17 @@ defmodule BinariesChapter do
     {:ok, contents} = File.read(path_to_file)
     formatting_list =
       String.split(contents, ~r{\r\n})
-    orders_as_kl =
-      for [id, ship_to, net_amount] <- formatting_list, Enum.find_index(formatting_list, fn x -> x == [id, ship_to, net_amount] end) != 0, do: [id: id, ship_to: ship_to, net_amount: net_amount]
+    [head | tail] = formatting_list
+    kl_converter([head | tail])
+  end
+
+  def kl_converter([]) do
+    []
+  end
+
+  def kl_converter([head | tail]) do
+    IO.puts("process the string")
+    kl_converter(tail)
   end
 
 
