@@ -129,17 +129,17 @@ defmodule BinariesChapter do
     {:ok, contents} = File.read(path_to_file)
     formatting_list =
       String.split(contents, ~r{\r\n})
-    [head | tail] = formatting_list
-    kl_converter([head | tail])
+    sales_kl = []
+    sales_kl_converter(formatting_list, sales_kl)
   end
 
-  def kl_converter([]) do
-    []
-  end
+  def sales_kl_converter([], sales_kl), do: "This is sales_kl: #{sales_kl}"
 
-  def kl_converter([head | tail]) do
-    IO.puts("process the string")
-    kl_converter(tail)
+  def sales_kl_converter([head | tail], sales_kl) do
+    conversion_list =
+      String.split(head, ~r{\,})
+    IO.puts(conversion_list)
+    sales_kl_converter(tail, sales_kl)
   end
 
 
