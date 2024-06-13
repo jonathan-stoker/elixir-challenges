@@ -128,7 +128,8 @@ defmodule BinariesChapter do
   def sales_parser(path_to_file) when is_binary(path_to_file) do
     {:ok, contents} = File.read(path_to_file)
     formatting_list =
-      String.split(contents, ~r{\r\n})
+      Enum.drop(String.split(contents, ~r{\r\n}), 1)
+    require IEx; IEx.pry()
     sales_kl = []
     sales_kl_converter(formatting_list, sales_kl)
   end
@@ -138,7 +139,9 @@ defmodule BinariesChapter do
   def sales_kl_converter([head | tail], sales_kl) do
     conversion_list =
       String.split(head, ~r{\,})
-    IO.puts(conversion_list)
+    order_kl =
+      [id: String.to_integer(Enum.at(conversion_list, 0)), ship_to: String.to_atom(Enum.at(conversion_list, 1)), net_amount: Float.parse(Enum.at(conversion_list, 2))]
+    require IEx; IEx.pry()
     sales_kl_converter(tail, sales_kl)
   end
 
