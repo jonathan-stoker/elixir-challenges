@@ -129,19 +129,23 @@ defmodule BinariesChapter do
     {:ok, contents} = File.read(path_to_file)
     formatting_list =
       Enum.drop(String.split(contents, ~r{\r\n}), 1)
-    require IEx; IEx.pry()
     sales_kl = []
     sales_kl_converter(formatting_list, sales_kl)
   end
 
-  def sales_kl_converter([], sales_kl), do: "This is sales_kl: #{sales_kl}"
+  def sales_kl_converter([], sales_kl), do: Enum.reverse(sales_kl)
 
   def sales_kl_converter([head | tail], sales_kl) do
     conversion_list =
       String.split(head, ~r{\,})
+    { net_float, _ } =
+      Float.parse(Enum.at(conversion_list, 2))
+    formatted_ship_to =
+      String.replace_prefix(Enum.at(conversion_list, 1), ":", "")
     order_kl =
-      [id: String.to_integer(Enum.at(conversion_list, 0)), ship_to: String.to_atom(Enum.at(conversion_list, 1)), net_amount: Float.parse(Enum.at(conversion_list, 2))]
-    require IEx; IEx.pry()
+      [id: String.to_integer(Enum.at(conversion_list, 0)), ship_to: String.to_atom(formatted_ship_to), net_amount: net_float]
+    sales_kl =
+      [ order_kl | sales_kl ]
     sales_kl_converter(tail, sales_kl)
   end
 
