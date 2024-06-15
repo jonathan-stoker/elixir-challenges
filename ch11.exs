@@ -133,7 +133,11 @@ defmodule BinariesChapter do
     sales_kl_converter(formatting_list, sales_kl)
   end
 
-  def sales_kl_converter([], sales_kl), do: Enum.reverse(sales_kl)
+  def sales_kl_converter([], sales_kl) do
+    tax_rates = [ NC: 0.075, TX: 0.08 ]
+    IO.write("tax rates are: NC: 0.075, TX: 0.08")
+    orders_with_total(Enum.reverse(sales_kl), tax_rates)
+  end
 
   def sales_kl_converter([head | tail], sales_kl) do
     conversion_list =
@@ -147,6 +151,18 @@ defmodule BinariesChapter do
     sales_kl =
       [ order_kl | sales_kl ]
     sales_kl_converter(tail, sales_kl)
+  end
+
+  def orders_with_total(orders, tax_rates) do
+    for order <- orders, do: add_total_to(order, tax_rates)
+  end
+
+  # Below function not written by me (https://media.pragprog.com/titles/elixir16/Elixir_1.6_Exercises.pdf)
+  def add_total_to(order = [id: _, ship_to: state, net_amount: net], tax_rates) do
+    tax_rate = Keyword.get(tax_rates, state, 0)
+    tax = net*tax_rate
+    total = net+tax
+    Keyword.put(order, :total_amount, total)
   end
 
 
