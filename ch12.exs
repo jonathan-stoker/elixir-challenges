@@ -19,5 +19,21 @@ defp fb_case(number) do
     end
 end
 
+# Exercise 3: Write an ok! function that takes an arbitrary parameter. If the parameter is the tuple {:ok, data},
+# return the data. Otherwise, raise an exception containing information from the parameter.
+# You could use your function like this:
+# file = ok! File.open("somefile")
+
+def ok!(data) do
+  case data do
+    data when data == {:ok, data} ->
+      data
+    data when data == {:error, data} ->
+      raise RuntimeError, message: "Failed to open file."
+    _ ->
+      raise RuntimeError, message: "Unknown data"
+  end
+end
+
 
 end
