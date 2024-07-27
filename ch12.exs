@@ -26,12 +26,12 @@ end
 
 def ok!(data) do
   case data do
-    data when data == {:ok, data} ->
-      data
-    data when data == {:error, data} ->
+    {:ok, file} ->
+      file
+    {:error, message} ->
       raise RuntimeError, message: "Failed to open file."
     _ ->
-      raise RuntimeError, message: "Unknown data"
+      raise RuntimeError, message: "Unknown data."
   end
 end
 
